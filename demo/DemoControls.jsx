@@ -73,7 +73,7 @@ export function DemoControls() {
           ))}
         </div>
         <p style={styles.hint}>
-          Low: direct lighting. Med: bloom. Ultra: GTAO, bloom, lens flare, edge chromatic aberration and DOF — move the cursor over the helicopter to focus.
+          Low/Med: scene direta. Ultra: edge chromatic aberration.
         </p>
       </div>
     </div>

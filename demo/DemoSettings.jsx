@@ -1,5 +1,4 @@
-import { createContext, useCallback, useContext, useRef, useState } from 'react'
-import * as THREE from 'three/webgpu'
+import { createContext, useContext, useState } from 'react'
 import { QUALITY_PRESETS } from './constants'
 
 const DemoSettingsContext = createContext(null)
@@ -7,17 +6,9 @@ const DemoSettingsContext = createContext(null)
 export function DemoSettingsProvider({ children }) {
   const [quality, setQuality] = useState('ultra')
   const preset = QUALITY_PRESETS[quality]
-  const focusPoint = useRef(new THREE.Vector3(0, 1.8, 0))
-  const focusTarget = useRef(new THREE.Vector3(0, 1.8, 0))
-
-  const setFocusTarget = useCallback((point) => {
-    focusTarget.current.copy(point)
-  }, [])
 
   return (
-    <DemoSettingsContext.Provider
-      value={{ quality, setQuality, preset, focusPoint, focusTarget, setFocusTarget }}
-    >
+    <DemoSettingsContext.Provider value={{ quality, setQuality, preset }}>
       {children}
     </DemoSettingsContext.Provider>
   )

@@ -5,6 +5,7 @@
 
 import * as THREE from 'three/webgpu'
 import { Canvas, extend } from '@react-three/fiber'
+import { Perf } from 'r3f-webgpu-perf'
 
 extend(THREE)
 
@@ -26,6 +27,7 @@ export function WebGPUCanvas({ children }) {
       }}
       style={{ width: '100%', height: '100%' }}
     >
+      <Perf position="top-left" />
       {children}
     </Canvas>
   )

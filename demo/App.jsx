@@ -3,10 +3,10 @@ import { WebGPUCanvas } from './WebGPUCanvas'
 import { Scene, DemoModeControls } from './Scene'
 import { FluidFX } from './FluidFX'
 
-function FluidDemo({ demo }) {
+function FluidDemo({ demo, basicText }) {
   return (
     <>
-      <Scene demo={demo} />
+      <Scene demo={demo} basicText={basicText} />
       {demo === 'basic' && <FluidFX />}
     </>
   )
@@ -41,6 +41,60 @@ function WebGPUCheck({ children }) {
   }
 
   return children
+}
+
+function BasicTextInput({ value, onChange }) {
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: 16,
+        left: 16,
+        zIndex: 10,
+        width: 280,
+        padding: '14px 18px',
+        borderRadius: 12,
+        border: '1px solid rgba(255,255,255,0.12)',
+        background: 'rgba(0,0,0,0.55)',
+        backdropFilter: 'blur(8px)',
+        color: '#fff',
+        fontFamily: 'system-ui, sans-serif',
+      }}
+    >
+      <label
+        htmlFor="basic-text-input"
+        style={{
+          display: 'block',
+          fontSize: 11,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.45)',
+          marginBottom: 8,
+        }}
+      >
+        Text
+      </label>
+      <input
+        id="basic-text-input"
+        type="text"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        maxLength={48}
+        style={{
+          width: '100%',
+          boxSizing: 'border-box',
+          padding: '10px 12px',
+          borderRadius: 8,
+          border: '1px solid rgba(255,255,255,0.15)',
+          background: 'rgba(255,255,255,0.06)',
+          color: '#fff',
+          fontFamily: 'inherit',
+          fontSize: 14,
+          outline: 'none',
+        }}
+      />
+    </div>
+  )
 }
 
 function DemoCredits() {
@@ -166,14 +220,16 @@ const overlayStyle = {
 
 export default function App() {
   const [demo, setDemo] = useState('basic')
+  const [basicText, setBasicText] = useState('R3F-WEBGPU-TEXT')
 
   return (
     <WebGPUCheck>
       <DemoModeControls demo={demo} setDemo={setDemo} />
       <MouseHint demo={demo} />
+      {demo === 'basic' && <BasicTextInput value={basicText} onChange={setBasicText} />}
       <DemoCredits />
       <WebGPUCanvas>
-        <FluidDemo demo={demo} />
+        <FluidDemo demo={demo} basicText={basicText} />
       </WebGPUCanvas>
     </WebGPUCheck>
   )

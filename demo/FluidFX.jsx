@@ -26,9 +26,9 @@ import {
 
 const SIM_SIZE = 256
 const SIM_COUNT = SIM_SIZE * SIM_SIZE
-const DISSIPATION = 0.985
-const DYE_DISSIPATION = 0.992
-const ADVECT_STRENGTH = 0.35
+const DISSIPATION = 0.992
+const DYE_DISSIPATION = 0.996
+const ADVECT_STRENGTH = 0.22
 
 function createSimTexture() {
   const tex = new StorageTexture(SIM_SIZE, SIM_SIZE)

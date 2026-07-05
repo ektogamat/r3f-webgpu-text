@@ -15,7 +15,7 @@ import {
 const FONT_DATA = '/fonts/Manrope-Medium-msdf.json'
 const FONT_ATLAS = '/fonts/Manrope-Medium.png'
 
-function BasicFluidDemo() {
+function BasicFluidDemo({ text }) {
   return (
     <>
       <WebGPUText
@@ -29,7 +29,7 @@ function BasicFluidDemo() {
         fontData={FONT_DATA}
         fontAtlas={FONT_ATLAS}
       >
-        R3F-WEBGPU-TEXT
+        {text}
       </WebGPUText>
 
       <WebGPUText
@@ -42,7 +42,7 @@ function BasicFluidDemo() {
         fontData={FONT_DATA}
         fontAtlas={FONT_ATLAS}
       >
-        Created by Anderson Mancini
+        MSDF WebGPU Text for React Three Fiber - Created by Anderson Mancini
       </WebGPUText>
     </>
   )
@@ -106,7 +106,7 @@ function InstancedTextDemo() {
   )
 }
 
-export function Scene({ demo = 'basic' }) {
+export function Scene({ demo = 'basic', basicText }) {
   const isBasic = demo === 'basic'
 
   return (
@@ -115,7 +115,7 @@ export function Scene({ demo = 'basic' }) {
       <Environment
         preset="forest"
         background={isBasic}
-        backgroundIntensity={0.3}
+        backgroundIntensity={0.1}
         environmentIntensity={isBasic ? 0.15 : 0.85}
       />
 
@@ -149,7 +149,7 @@ export function Scene({ demo = 'basic' }) {
         </>
       )}
 
-      {demo === 'basic' && <BasicFluidDemo />}
+      {demo === 'basic' && <BasicFluidDemo text={basicText} />}
       {demo === 'batched' && <BatchedTextDemo />}
       {demo === 'instanced' && <InstancedTextDemo />}
     </>
@@ -168,7 +168,7 @@ export function DemoModeControls({ demo, setDemo }) {
       style={{
         position: 'fixed',
         top: 16,
-        left: 16,
+        right: 16,
         zIndex: 10,
         display: 'flex',
         flexWrap: 'wrap',
