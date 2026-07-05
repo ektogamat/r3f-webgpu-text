@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- Add `side` prop to `<WebGPUText>` (defaults to `FrontSide`)
+- Fix double-sided rendering by applying `material.side` after material creation
+
 ## 1.0.0
 
 - Initial release of `r3f-webgpu-text`
