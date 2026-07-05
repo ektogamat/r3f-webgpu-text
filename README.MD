@@ -217,6 +217,8 @@ clearFontCache()
 
 ## Demo
 
+**Live demo:** [three-webgpu-text.vercel.app](https://three-webgpu-text.vercel.app/)
+
 Run the included demo locally:
 
 ```bash
