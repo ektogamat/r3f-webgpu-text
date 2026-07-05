@@ -4,7 +4,7 @@
  */
 
 import type { ReactNode, Ref } from 'react'
-import type { Group } from 'three'
+import type { Group, Side } from 'three'
 
 export type AnchorX = 'left' | 'center' | 'right' | number
 export type AnchorY =
@@ -30,6 +30,7 @@ export interface WebGPUTextProps {
   letterSpacing?: number
   maxWidth?: number
   renderOrder?: number
+  side?: Side
   scale?: [number, number, number] | number
   fontAtlas?: string
   fontData?: string

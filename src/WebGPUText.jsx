@@ -17,7 +17,7 @@ import { parseAnchor } from './parseAnchor'
 const DEFAULT_FONT_SIZE = 42
 
 function propsAreEqual(prev, next) {
-  const skip = ['position', 'rotation', 'scale', 'onClick', 'onPointerOver', 'onPointerOut']
+  const skip = ['position', 'rotation', 'scale', 'side', 'onClick', 'onPointerOver', 'onPointerOut']
   const keys = new Set([...Object.keys(prev), ...Object.keys(next)])
   for (const key of keys) {
     if (skip.includes(key)) continue
@@ -42,6 +42,7 @@ export const WebGPUText = memo(
       letterSpacing = 0,
       maxWidth,
       renderOrder = 0,
+      side = THREE.FrontSide,
       scale: scaleProp,
       fontAtlas = DEFAULT_FONT_ATLAS,
       fontData = DEFAULT_FONT_DATA,
@@ -86,6 +87,7 @@ export const WebGPUText = memo(
             color,
             opacity,
             transparent: true,
+            side,
           })
 
           geometry.computeBoundingBox()
@@ -156,6 +158,7 @@ export const WebGPUText = memo(
       letterSpacing,
       maxWidth,
       renderOrder,
+      side,
       visible,
     ])
 

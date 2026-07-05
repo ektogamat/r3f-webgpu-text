@@ -4,7 +4,8 @@
  */
 
 import { useMemo } from 'react'
-import { OrbitControls } from '@react-three/drei'
+import * as THREE from 'three/webgpu'
+import { Environment, OrbitControls } from '@react-three/drei'
 import {
   WebGPUText,
   WebGPUBatchedText,
@@ -14,71 +15,36 @@ import {
 const FONT_DATA = '/fonts/Manrope-Medium-msdf.json'
 const FONT_ATLAS = '/fonts/Manrope-Medium.png'
 
-function BasicTextDemo() {
+function BasicFluidDemo() {
   return (
-    <group>
+    <>
       <WebGPUText
-        position={[0, 2.55, 0]}
-        fontSize={0.045}
-        color="#ff8844"
+        position={[0, 0.08, 0]}
+        fontSize={0.55}
+        color="#ffffff"
         anchorX="center"
         anchorY="middle"
+        letterSpacing={-0.02}
+        side={THREE.DoubleSide}
+        fontData={FONT_DATA}
+        fontAtlas={FONT_ATLAS}
+      >
+        R3F-WEBGPU-TEXT
+      </WebGPUText>
+
+      <WebGPUText
+        position={[0, -0.40, 0]}
+        fontSize={0.07}
+        color="#888888"
+        anchorX="center"
+        anchorY="middle"
+        side={THREE.DoubleSide}
         fontData={FONT_DATA}
         fontAtlas={FONT_ATLAS}
       >
         Created by Anderson Mancini
       </WebGPUText>
-
-      <WebGPUText
-        position={[0, 2.2, 0]}
-        fontSize={0.08}
-        color="#ffffff"
-        anchorX="center"
-        anchorY="middle"
-        fontData={FONT_DATA}
-        fontAtlas={FONT_ATLAS}
-      >
-        WebGPUText
-      </WebGPUText>
-
-      <WebGPUText
-        position={[-2.5, 1.2, 0]}
-        fontSize={0.05}
-        color="#ff6600"
-        anchorX="left"
-        anchorY="middle"
-        fontData={FONT_DATA}
-        fontAtlas={FONT_ATLAS}
-      >
-        Left anchor
-      </WebGPUText>
-
-      <WebGPUText
-        position={[2.5, 1.2, 0]}
-        fontSize={0.05}
-        color="#66ccff"
-        anchorX="right"
-        anchorY="middle"
-        textAlign="right"
-        fontData={FONT_DATA}
-        fontAtlas={FONT_ATLAS}
-      >
-        Right anchor
-      </WebGPUText>
-
-      <WebGPUText
-        position={[0, 0.4, 0]}
-        fontSize={0.035}
-        color="#cccccc"
-        maxWidth={3}
-        textAlign="center"
-        lineHeight={1.2}
-        fontData={FONT_DATA}
-        fontAtlas={FONT_ATLAS}
-      >
-        Multi-line wrapped text with maxWidth for WebGPU MSDF rendering in React Three Fiber.
-      </WebGPUText>
-    </group>
+    </>
   )
 }
 
@@ -141,41 +107,56 @@ function InstancedTextDemo() {
 }
 
 export function Scene({ demo = 'basic' }) {
+  const isBasic = demo === 'basic'
+
   return (
     <>
-      <color attach="background" args={['#0a0a0f']} />
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 8, 5]} intensity={1.2} />
+      <color attach="background" args={[isBasic ? '#050508' : '#0a0a0f']} />
+      <Environment
+        preset="forest"
+        background={isBasic}
+        backgroundIntensity={0.3}
+        environmentIntensity={isBasic ? 0.15 : 0.85}
+      />
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color="#151520" />
-      </mesh>
+      <OrbitControls
+        enableDamping
+        dampingFactor={0.06}
+        minDistance={isBasic ? 2.5 : 3}
+        maxDistance={isBasic ? 12 : 18}
+        maxPolarAngle={isBasic ? Math.PI : Math.PI / 2}
+        target={[0, isBasic ? 0 : 0.5, 0]}
+      />
 
-      {demo !== 'basic' && (
-        <WebGPUText
-          position={[0, 2.6, 0]}
-          fontSize={0.04}
-          color="#ff8844"
-          anchorX="center"
-          anchorY="middle"
-          fontData={FONT_DATA}
-          fontAtlas={FONT_ATLAS}
-        >
-          Created by Anderson Mancini
-        </WebGPUText>
+      {!isBasic && (
+        <>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
+            <planeGeometry args={[20, 20]} />
+            <meshStandardMaterial color="#151520" />
+          </mesh>
+
+          <WebGPUText
+            position={[0, 2.6, 0]}
+            fontSize={0.04}
+            color="#888888"
+            anchorX="center"
+            anchorY="middle"
+            fontData={FONT_DATA}
+            fontAtlas={FONT_ATLAS}
+          >
+            Created by Anderson Mancini
+          </WebGPUText>
+        </>
       )}
 
-      {demo === 'basic' && <BasicTextDemo />}
+      {demo === 'basic' && <BasicFluidDemo />}
       {demo === 'batched' && <BatchedTextDemo />}
       {demo === 'instanced' && <InstancedTextDemo />}
-
-      <OrbitControls enableDamping dampingFactor={0.05} maxPolarAngle={Math.PI / 2} />
     </>
   )
 }
 
-export function DemoControls({ demo, setDemo }) {
+export function DemoModeControls({ demo, setDemo }) {
   const options = [
     { id: 'basic', label: 'WebGPUText' },
     { id: 'batched', label: 'WebGPUBatchedText' },
@@ -190,6 +171,7 @@ export function DemoControls({ demo, setDemo }) {
         left: 16,
         zIndex: 10,
         display: 'flex',
+        flexWrap: 'wrap',
         gap: 8,
         fontFamily: 'system-ui, sans-serif',
       }}
@@ -202,16 +184,17 @@ export function DemoControls({ demo, setDemo }) {
           style={{
             padding: '8px 14px',
             borderRadius: 8,
-            border: '1px solid rgba(255,255,255,0.15)',
-            background: demo === id ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.4)',
-            color: '#fff',
+            border: demo === id ? '1px solid rgba(255,136,68,0.5)' : '1px solid rgba(255,255,255,0.15)',
+            background: demo === id ? 'rgba(255,136,68,0.15)' : 'rgba(0,0,0,0.45)',
+            color: demo === id ? '#ff8844' : '#fff',
             cursor: 'pointer',
             fontSize: 13,
+            fontWeight: demo === id ? 600 : 400,
+            backdropFilter: 'blur(8px)',
           }}
         >
           {label}
         </button>
       ))}
-    </div>
-  )
+    </div>)
 }

@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react'
 import { WebGPUCanvas } from './WebGPUCanvas'
-import { Scene, DemoControls } from './Scene'
+import { Scene, DemoModeControls } from './Scene'
+import { FluidFX } from './FluidFX'
+
+function FluidDemo({ demo }) {
+  return (
+    <>
+      <Scene demo={demo} />
+      {demo === 'basic' && <FluidFX />}
+    </>
+  )
+}
 
 function WebGPUCheck({ children }) {
   const [supported, setSupported] = useState(null)
@@ -103,6 +113,43 @@ function DemoCredits() {
   )
 }
 
+function MouseHint({ demo }) {
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    setVisible(true)
+    const timer = setTimeout(() => setVisible(false), 3500)
+    return () => clearTimeout(timer)
+  }, [demo])
+
+  if (!visible || demo !== 'basic') return null
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: 24,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10,
+        padding: '10px 18px',
+        borderRadius: 999,
+        border: '1px solid rgba(255,255,255,0.12)',
+        background: 'rgba(0,0,0,0.45)',
+        backdropFilter: 'blur(8px)',
+        color: 'rgba(255,255,255,0.75)',
+        fontFamily: 'system-ui, sans-serif',
+        fontSize: 13,
+        letterSpacing: '0.02em',
+        pointerEvents: 'none',
+        transition: 'opacity 0.8s ease',
+      }}
+    >
+      Move your mouse to distort the text
+    </div>
+  )
+}
+
 const overlayStyle = {
   width: '100%',
   height: '100%',
@@ -110,7 +157,7 @@ const overlayStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  background: '#0a0a0f',
+  background: '#050508',
   color: '#fff',
   fontFamily: 'system-ui, sans-serif',
   padding: 24,
@@ -122,10 +169,11 @@ export default function App() {
 
   return (
     <WebGPUCheck>
-      <DemoControls demo={demo} setDemo={setDemo} />
+      <DemoModeControls demo={demo} setDemo={setDemo} />
+      <MouseHint demo={demo} />
       <DemoCredits />
       <WebGPUCanvas>
-        <Scene demo={demo} />
+        <FluidDemo demo={demo} />
       </WebGPUCanvas>
     </WebGPUCheck>
   )

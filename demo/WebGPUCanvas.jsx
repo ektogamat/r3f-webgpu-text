@@ -11,11 +11,11 @@ extend(THREE)
 export function WebGPUCanvas({ children }) {
   return (
     <Canvas
-      camera={{ position: [0, 2, 8], fov: 50, near: 0.1, far: 200 }}
+      camera={{ position: [0, 0, 5], fov: 45, near: 0.1, far: 100 }}
       gl={async (props) => {
         const renderer = new THREE.WebGPURenderer({
           ...props,
-          antialias: true,
+          antialias: false,
           powerPreference: 'high-performance',
         })
         await renderer.init()
