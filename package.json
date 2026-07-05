@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/ektogamat/r3f-webgpu-text.git"
   },
-  "homepage": "https://three-webgpu-text.vercel.app/",
+  "homepage": "https://r3f-webgpu-text.vercel.app",
   "bugs": {
     "url": "https://github.com/ektogamat/r3f-webgpu-text/issues"
   },
