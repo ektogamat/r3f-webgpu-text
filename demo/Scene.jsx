@@ -128,27 +128,6 @@ export function Scene({ demo = 'basic', basicText }) {
         target={[0, isBasic ? 0 : 0.5, 0]}
       />
 
-      {!isBasic && (
-        <>
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
-            <planeGeometry args={[20, 20]} />
-            <meshStandardMaterial color="#151520" />
-          </mesh>
-
-          <WebGPUText
-            position={[0, 2.6, 0]}
-            fontSize={0.04}
-            color="#888888"
-            anchorX="center"
-            anchorY="middle"
-            fontData={FONT_DATA}
-            fontAtlas={FONT_ATLAS}
-          >
-            Created by Anderson Mancini
-          </WebGPUText>
-        </>
-      )}
-
       {demo === 'basic' && <BasicFluidDemo text={basicText} />}
       {demo === 'batched' && <BatchedTextDemo />}
       {demo === 'instanced' && <InstancedTextDemo />}
