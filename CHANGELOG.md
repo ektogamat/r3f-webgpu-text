@@ -8,3 +8,4 @@
 - `<WebGPUInstancedText>` — character-level instancing for large text counts
 - Font caching utilities (`loadFontCached`, `clearFontCache`)
 - TypeScript definitions included
+- Live demo: [https://r3f-webgpu-text.vercel.app](https://r3f-webgpu-text.vercel.app/)

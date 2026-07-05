@@ -72,12 +72,26 @@ function DemoCredits() {
         Created by Anderson Mancini
       </div>
       <a
-        href="https://github.com/ektogamat/r3f-webgpu-text"
+        href="https://www.npmjs.com/package/r3f-webgpu-text"
         target="_blank"
         rel="noreferrer"
         style={{
           display: 'inline-block',
           marginTop: 10,
+          fontSize: 12,
+          color: 'rgba(255,255,255,0.55)',
+          textDecoration: 'none',
+        }}
+      >
+        npmjs.com/package/r3f-webgpu-text
+      </a>
+      <a
+        href="https://github.com/ektogamat/r3f-webgpu-text"
+        target="_blank"
+        rel="noreferrer"
+        style={{
+          display: 'inline-block',
+          marginTop: 6,
           fontSize: 12,
           color: 'rgba(255,255,255,0.55)',
           textDecoration: 'none',

@@ -2,6 +2,8 @@
 
 **Created by [Anderson Mancini](https://github.com/ektogamat)**
 
+**Live demo:** [https://r3f-webgpu-text.vercel.app](https://r3f-webgpu-text.vercel.app/)
+
 MSDF WebGPU text components for [React Three Fiber](https://docs.pmnd.rs/react-three-fiber). Render crisp, scalable 3D text in WebGPU scenes with an API inspired by Drei's `<Text />`.
 
 Built on top of [`three-msdf-text-utils`](https://www.npmjs.com/package/three-msdf-text-utils), which provides MSDF geometry and WebGPU materials for vanilla Three.js. This package brings the same capabilities to R3F as ready-to-use React components.
@@ -216,6 +218,8 @@ clearFontCache()
 ```
 
 ## Demo
+
+**Live demo:** [https://r3f-webgpu-text.vercel.app](https://r3f-webgpu-text.vercel.app/)
 
 Run the included demo locally:
 
