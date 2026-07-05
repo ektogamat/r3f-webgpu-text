@@ -17,7 +17,7 @@ import { parseAnchor } from './parseAnchor'
 const DEFAULT_FONT_SIZE = 42
 
 function propsAreEqual(prev, next) {
-  const skip = ['position', 'rotation', 'scale', 'side', 'onClick', 'onPointerOver', 'onPointerOut']
+  const skip = ['position', 'rotation', 'scale', 'onClick', 'onPointerOver', 'onPointerOut']
   const keys = new Set([...Object.keys(prev), ...Object.keys(next)])
   for (const key of keys) {
     if (skip.includes(key)) continue
@@ -87,8 +87,8 @@ export const WebGPUText = memo(
             color,
             opacity,
             transparent: true,
-            side,
           })
+          material.side = side
 
           geometry.computeBoundingBox()
           const bbox = geometry.boundingBox
@@ -166,13 +166,14 @@ export const WebGPUText = memo(
       if (!innerMesh) return
       innerMesh.visible = visible ?? true
       innerMesh.renderOrder = renderOrder ?? 0
+      innerMesh.material.side = side
       innerMesh.rotation.set(
         (rotation?.[0] ?? 0) + Math.PI,
         rotation?.[1] ?? 0,
         rotation?.[2] ?? 0,
       )
       if (userData) innerMesh.userData = { ...userData }
-    }, [innerMesh, visible, renderOrder, rotation?.[0], rotation?.[1], rotation?.[2], userData])
+    }, [innerMesh, visible, renderOrder, side, rotation?.[0], rotation?.[1], rotation?.[2], userData])
 
     return (
       <group
